@@ -1,9 +1,9 @@
 import { model, Schema } from 'mongoose';
-import { TYPE_ANOMALII } from '../constants/typeAnomalii';
+import { TYPE_FAULT } from '../constants/typeFault.js';
 
-const anomaliaSchema = new Schema(
+const faultSchema = new Schema(
   {
-    id_anomalii: {
+    id_fault: {
       type: String,
       required: true,
       trim: true,
@@ -33,9 +33,9 @@ const anomaliaSchema = new Schema(
       type: String,
       required: true,
     },
-    typeAnomalii: {
+    typefault: {
       type: String,
-      enum: TYPE_ANOMALII,
+      enum: TYPE_FAULT,
       required: true,
       default: 'Produzione',
     },
@@ -51,10 +51,10 @@ const anomaliaSchema = new Schema(
   { timestamps: true, versionKey: false },
 );
 
-anomaliaSchema.methods.toJSON = function () {
+faultSchema.methods.toJSON = function () {
   const obj = this.toObject();
 
   delete obj.password;
   return obj;
 };
-export const Anomalia = model('Anomalia', anomaliaSchema);
+export const Fault = model('Fault', faultSchema);
