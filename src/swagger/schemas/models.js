@@ -139,6 +139,95 @@
  *           type: string
  *           format: date-time
  *
+ *     Fault:
+ *       type: object
+ *       description: Модель несправності обладнання
+ *       properties:
+ *         _id:
+ *           type: string
+ *           example: "65c12f8a9e1b2c0012a3b456"
+ *         id_fault:
+ *           type: string
+ *           description: Унікальний ідентифікатор несправності
+ *           example: "FAULT-2024-001"
+ *         nameOperator:
+ *           type: string
+ *           description: Імʼя оператора, який зареєстрував несправність
+ *           example: "Ivan Ivanov"
+ *         userId:
+ *           type: string
+ *           description: ID оператора
+ *           example: "65c12f8a9e1b2c0012a3b111"
+ *         dataCreated:
+ *           type: string
+ *           description: Дата створення
+ *           example: "2024-02-10"
+ *         timeCreated:
+ *           type: string
+ *           description: Час створення
+ *           example: "14:32"
+ *         plantId:
+ *           type: string
+ *           description: ID обладнання (Plant)
+ *           example: "64b1a2..."
+ *         partId:
+ *           type: string
+ *           description: ID деталі обладнання (PartPlant)
+ *           example: "64b1f5..."
+ *         typefault:
+ *           type: string
+ *           enum: [Produzione, Qualità, Manutenzione, Sicurezza]
+ *           description: Тип несправності
+ *           example: "Produzione"
+ *         comment:
+ *           type: string
+ *           description: Опис проблеми
+ *           example: "Не спрацьовує датчик тиску на основному валу"
+ *         img:
+ *           type: string
+ *           description: Посилання на фото несправності
+ *           example: "https://example.com/uploads/fault.jpg"
+ *         priority:
+ *           type: string
+ *           enum: [Bassa, Media, Alta]
+ *           description: Пріоритет виконання
+ *           example: "Media"
+ *         assignedMaintainers:
+ *           type: array
+ *           description: Список ID призначених монтерів
+ *           items:
+ *             type: string
+ *         managerComment:
+ *           type: string
+ *           description: Коментар менеджера
+ *           example: "Терміново перевірити вузол"
+ *         deadline:
+ *           type: string
+ *           description: Дедлайн
+ *           example: "2024-02-15"
+ *         plannedDate:
+ *           type: string
+ *           description: Запланована дата
+ *           example: "2024-02-12"
+ *         plannedTime:
+ *           type: string
+ *           description: Запланований час
+ *           example: "10:30"
+ *         estimatedDuration:
+ *           type: number
+ *           description: Орієнтовна тривалість робіт (хв)
+ *           example: 60
+ *         managerId:
+ *           type: string
+ *           description: ID менеджера
+ *           example: "65c12f8a9e1b2c0012a3b777"
+ *         createdAt:
+ *           type: string
+ *           format: date-time
+ *         updatedAt:
+ *           type: string
+ *           format: date-time
+ *
  *     Session:
  *       type: object
  *       required:
