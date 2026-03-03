@@ -15,8 +15,8 @@ export const addFault = async (req, res) => {
     } = req.body;
 
     const managerId = req.user?._id;
+    const managerName = req.user?.name || 'Менеджер';
 
-    //перевірка, що виконавець дійсно монтер
     const workers = await User.find({
       _id: { $in: assignedMaintainers },
       role: 'maintenanceWorker',
@@ -27,26 +27,39 @@ export const addFault = async (req, res) => {
         message: 'Один або кілька вибраних користівачів не є монтерами',
       });
     }
-    const updatedFault = await Fault.findByIdAndUpdate(
-      faultId,
-      {
-        priority,
-        assignedMaintainers,
-        plannedDate,
-        plannedTime,
-        deadline,
-        estimatedDuration,
-        managerComment,
-        managerId,
-      },
-      { new: true },
-    ).populate('assignedMaintainers', 'name');
 
-    if (!updatedFault) {
+    const fault = await Fault.findById(faultId);
+
+    if (!fault) {
       return res.status(404).json({ message: 'Несправність не знайдена' });
     }
 
-    return res.status(200).json(updatedFault);
+    const updateData = {
+      priority,
+      assignedMaintainers,
+      plannedDate,
+      plannedTime,
+      deadline,
+      estimatedDuration,
+      managerComment,
+      managerId,
+    };
+
+    fault.history.push({
+      action: 'updated_by_manager',
+      userId: managerId,
+      userName: managerName,
+      changes: updateData,
+      timestamp: new Date(),
+    });
+
+    Object.assign(fault, updateData);
+
+    await fault.save();
+
+    await fault.populate('assignedMaintainers', 'name');
+
+    return res.status(200).json(fault);
   } catch (error) {
     return res.status(500).json({
       message: 'Помилка при оновленні несправності менеджером',

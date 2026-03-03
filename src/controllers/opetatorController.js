@@ -70,6 +70,14 @@ export const createFault = async (req, res) => {
       typefault,
       comment,
       img: imageUrl,
+      history: [
+        {
+          action: 'created',
+          userId: userId,
+          userName: req.user?.name || 'Operator',
+          timestamp: new Date(),
+        },
+      ],
     });
 
     return res.status(201).json(newFault);
