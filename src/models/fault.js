@@ -84,6 +84,15 @@ const faultSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: 'User',
     },
+    history: [
+      {
+        action: { type: String, required: true }, // 'created', 'updated'
+        userId: { type: Schema.Types.ObjectId, ref: 'User' },
+        userName: String,
+        changes: Schema.Types.Mixed, // Здесь будем хранить старые/новые значения
+        timestamp: { type: Date, default: Date.now },
+      },
+    ],
   },
   { timestamps: true, versionKey: false },
 );
